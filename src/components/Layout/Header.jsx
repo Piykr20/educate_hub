@@ -28,6 +28,7 @@ export const Header = () => {
     dispatch(toggleDarkMode());
   };
 
+
   return (
     <Navbar bg="white" expand="lg" className="shadow-sm border-bottom sticky-top">
       <Container fluid>
@@ -40,18 +41,23 @@ export const Header = () => {
         
         <Navbar.Collapse id="basic-navbar-nav">
           {/* Search Form */}
-          <Form className="d-flex mx-auto" style={{ maxWidth: '500px', width: '100%' }} onSubmit={handleSearch}>
-            <div className="position-relative w-100">
-              <i className="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-              <FormControl
-                type="search"
-                placeholder="Search for courses..."
-                className="ps-5"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-          </Form>
+          <div className="mx-auto" style={{ maxWidth: '500px', width: '100%' }}>
+            <Form className="d-flex gap-2" onSubmit={handleSearch}>
+              <div className="position-relative flex-grow-1">
+                <i className="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                <FormControl
+                  type="search"
+                  placeholder="Search courses, teachers..."
+                  className="ps-5"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+              <Button type="submit" variant="primary" className="btn-gradient">
+                <i className="bi bi-search"></i>Search
+              </Button>
+            </Form>
+          </div>
 
           <Nav className="ms-auto align-items-center">
             {/* Theme Toggle */}
@@ -66,9 +72,16 @@ export const Header = () => {
             {user ? (
               <>
                 {user.role === 'instructor' && (
-                  <Nav.Link as={Link} to="/instructor" className="me-3">
-                    Instructor
-                  </Nav.Link>
+                  <NavDropdown title="Instructor" id="instructor-dropdown" className="me-3">
+                    <NavDropdown.Item as={Link} to="/instructor">
+                      <i className="bi bi-speedometer2 me-2"></i>
+                      Dashboard
+                    </NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/teacher/content">
+                      <i className="bi bi-camera-video me-2"></i>
+                      Manage Content
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 )}
                 
                 <Button variant="outline-secondary" className="me-3 position-relative btn-floating" style={{ width: 'auto', height: 'auto', borderRadius: '8px' }}>

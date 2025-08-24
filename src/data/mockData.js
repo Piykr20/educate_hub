@@ -197,3 +197,124 @@ export const mockEnrollments = [
     enrolledAt: new Date('2024-01-12'),
   },
 ];
+
+export const mockTeachers = [
+  {
+    id: '2',
+    name: 'Jane Instructor',
+    email: 'instructor@example.com',
+    avatar: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=400',
+    bio: 'Experienced software developer and educator with 8+ years in web development. Passionate about teaching modern JavaScript frameworks and best practices.',
+    qualifications: [
+      'M.S. Computer Science - Stanford University',
+      'Certified React Developer',
+      'AWS Solutions Architect',
+      '8+ years industry experience'
+    ],
+    specializations: ['React', 'JavaScript', 'Node.js', 'Web Development'],
+    rating: 4.8,
+    totalStudents: 25000,
+    totalCourses: 12,
+    yearsExperience: 8,
+    courses: ['1', '2'], // Course IDs
+    socialLinks: {
+      linkedin: 'https://linkedin.com/in/janeinstructor',
+      twitter: 'https://twitter.com/janeinstructor',
+      github: 'https://github.com/janeinstructor'
+    }
+  },
+  {
+    id: '4',
+    name: 'Dr. Michael Chen',
+    email: 'michael@example.com',
+    avatar: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=400',
+    bio: 'Data Science expert and machine learning researcher. Former Google AI researcher with expertise in deep learning and artificial intelligence.',
+    qualifications: [
+      'Ph.D. Machine Learning - MIT',
+      'Former Google AI Researcher',
+      'Published 50+ research papers',
+      '10+ years in AI/ML'
+    ],
+    specializations: ['Machine Learning', 'Data Science', 'Python', 'AI'],
+    rating: 4.9,
+    totalStudents: 18000,
+    totalCourses: 8,
+    yearsExperience: 10,
+    courses: ['3'],
+    socialLinks: {
+      linkedin: 'https://linkedin.com/in/michaelchen',
+      twitter: 'https://twitter.com/drmichaelchen'
+    }
+  },
+  {
+    id: '5',
+    name: 'Sarah Williams',
+    email: 'sarah@example.com',
+    avatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400',
+    bio: 'Professional photographer and visual artist with expertise in portrait, landscape, and commercial photography. Award-winning photographer.',
+    qualifications: [
+      'B.F.A. Photography - Art Institute',
+      'Adobe Certified Expert',
+      'Award-winning photographer',
+      '12+ years professional experience'
+    ],
+    specializations: ['Photography', 'Adobe Photoshop', 'Lightroom', 'Visual Arts'],
+    rating: 4.7,
+    totalStudents: 15000,
+    totalCourses: 6,
+    yearsExperience: 12,
+    courses: ['4'],
+    socialLinks: {
+      instagram: 'https://instagram.com/sarahwilliamsphoto',
+      website: 'https://sarahwilliamsphoto.com'
+    }
+  }
+];
+
+export const mockCourseContent = [
+  {
+    id: '1',
+    courseId: '1',
+    instructorId: '2',
+    videos: [
+      {
+        id: 'v1',
+        title: 'Introduction to React',
+        description: 'Learn the fundamentals of React and its ecosystem',
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+        duration: '15:30',
+        order: 1,
+        uploadedAt: new Date('2024-01-10')
+      },
+      {
+        id: 'v2',
+        title: 'Components and JSX',
+        description: 'Deep dive into React components and JSX syntax',
+        videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+        duration: '22:15',
+        order: 2,
+        uploadedAt: new Date('2024-01-11')
+      }
+    ],
+    resources: [
+      {
+        id: 'r1',
+        title: 'React Fundamentals Cheat Sheet',
+        description: 'Quick reference guide for React basics',
+        type: 'pdf',
+        url: '#',
+        size: '2.5 MB',
+        uploadedAt: new Date('2024-01-10')
+      },
+      {
+        id: 'r2',
+        title: 'Component Examples',
+        description: 'Sample React components for practice',
+        type: 'pdf',
+        url: '#',
+        size: '1.8 MB',
+        uploadedAt: new Date('2024-01-11')
+      }
+    ]
+  }
+];

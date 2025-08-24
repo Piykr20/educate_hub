@@ -247,6 +247,55 @@ export const CourseDetail = () => {
                 <Card className="border-0 shadow-sm">
                   <Card.Body>
                     <h4 className="fw-bold mb-4">Course Description</h4>
+                    
+                    {/* Course Resources */}
+                    <div className="mb-4">
+                      <h5 className="fw-bold mb-3">Course Resources</h5>
+                      <div className="d-flex flex-column gap-2">
+                        <div className="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                          <div className="d-flex align-items-center">
+                            <i className="bi bi-file-earmark-pdf text-danger me-3 fs-4"></i>
+                            <div>
+                              <div className="fw-medium">React Fundamentals Guide</div>
+                              <small className="text-muted">PDF • 2.5 MB</small>
+                            </div>
+                          </div>
+                          <Button variant="primary" size="sm" className="btn-gradient">
+                            <i className="bi bi-download me-2"></i>
+                            Download
+                          </Button>
+                        </div>
+                        
+                        <div className="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                          <div className="d-flex align-items-center">
+                            <i className="bi bi-file-earmark-ppt text-warning me-3 fs-4"></i>
+                            <div>
+                              <div className="fw-medium">Component Examples</div>
+                              <small className="text-muted">PPT • 1.8 MB</small>
+                            </div>
+                          </div>
+                          <Button variant="primary" size="sm" className="btn-gradient">
+                            <i className="bi bi-download me-2"></i>
+                            Download
+                          </Button>
+                        </div>
+                        
+                        <div className="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                          <div className="d-flex align-items-center">
+                            <i className="bi bi-file-earmark-zip text-info me-3 fs-4"></i>
+                            <div>
+                              <div className="fw-medium">Source Code Files</div>
+                              <small className="text-muted">ZIP • 5.2 MB</small>
+                            </div>
+                          </div>
+                          <Button variant="primary" size="sm" className="btn-gradient">
+                            <i className="bi bi-download me-2"></i>
+                            Download
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+
                     <div>
                       <p>
                         This comprehensive React course is designed to take you from a complete beginner to an advanced React developer. 

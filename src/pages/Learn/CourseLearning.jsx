@@ -125,6 +125,40 @@ export const CourseLearning = () => {
             )}
           </div>
 
+          {/* Course Resources Section */}
+          <div className="bg-dark border-top border-secondary p-3">
+            <h6 className="text-white mb-3">
+              <i className="bi bi-folder me-2"></i>
+              Lesson Resources
+            </h6>
+            <div className="d-flex flex-column gap-2">
+              <div className="d-flex justify-content-between align-items-center p-2 bg-secondary bg-opacity-25 rounded">
+                <div className="d-flex align-items-center">
+                  <i className="bi bi-file-earmark-pdf text-danger me-3"></i>
+                  <div>
+                    <div className="text-white small fw-medium">Lesson Notes.pdf</div>
+                    <small className="text-muted">PDF • 1.2 MB</small>
+                  </div>
+                </div>
+                <Button variant="primary" size="sm" className="btn-gradient">
+                  <i className="bi bi-download"></i>
+                </Button>
+              </div>
+              
+              <div className="d-flex justify-content-between align-items-center p-2 bg-secondary bg-opacity-25 rounded">
+                <div className="d-flex align-items-center">
+                  <i className="bi bi-file-earmark-code text-success me-3"></i>
+                  <div>
+                    <div className="text-white small fw-medium">Code Examples.zip</div>
+                    <small className="text-muted">ZIP • 856 KB</small>
+                  </div>
+                </div>
+                <Button variant="primary" size="sm" className="btn-gradient">
+                  <i className="bi bi-download"></i>
+                </Button>
+              </div>
+            </div>
+          </div>
           {/* Controls */}
           <div className="learning-header p-3">
             <div className="d-flex justify-content-between align-items-center">

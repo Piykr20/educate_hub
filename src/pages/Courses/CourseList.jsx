@@ -218,8 +218,8 @@ export const CourseList = () => {
           <Button
             onClick={clearFilters}
             variant="primary"
-           
-            className="mt-3 btn-gradient mt-3"
+            className="mt-3"
+            className="mt-3 btn-gradient"
           >
             Clear all filters
           </Button>

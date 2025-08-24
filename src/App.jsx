@@ -1,20 +1,27 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from './hooks/useRedux';
-import { Header } from './components/Layout/Header';
-import { Footer } from './components/Layout/Footer';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { useAuth } from "./hooks/useRedux";
+import { Header } from "./components/Layout/Header";
+import { Footer } from "./components/Layout/Footer";
 
 // Pages
-import { Home } from './pages/Home';
-import { Login } from './pages/Auth/Login';
-import { Register } from './pages/Auth/Register';
-import { CourseList } from './pages/Courses/CourseList';
-import { CourseDetail } from './pages/Courses/CourseDetail';
-import { StudentDashboard } from './pages/Dashboard/StudentDashboard';
-import { InstructorDashboard } from './pages/Dashboard/InstructorDashboard';
-import { CourseLearning } from './pages/Learn/CourseLearning';
-
+import { Home } from "./pages/Home";
+import { Login } from "./pages/Auth/Login";
+import { Register } from "./pages/Auth/Register";
+import { CourseList } from "./pages/Courses/CourseList";
+import { CourseDetail } from "./pages/Courses/CourseDetail";
+import { StudentDashboard } from "./pages/Dashboard/StudentDashboard";
+import { InstructorDashboard } from "./pages/Dashboard/InstructorDashboard";
+import { CourseLearning } from "./pages/Learn/CourseLearning";
+import { SearchResults } from "./pages/Search/SearchResults";
+import { TeacherProfile } from "./pages/Teacher/TeacherProfile";
+import { TeacherContent } from "./pages/Teacher/TeacherContent";
+import "./App.css";
 // Protected Route Component
 const ProtectedRoute = ({ children, roles }) => {
   const { user, isLoading } = useAuth();
@@ -44,7 +51,7 @@ const ProtectedRoute = ({ children, roles }) => {
 const DashboardRouter = () => {
   const { user } = useAuth();
 
-  if (user?.role === 'instructor') {
+  if (user?.role === "instructor") {
     return <InstructorDashboard />;
   } else {
     return <StudentDashboard />;
@@ -66,40 +73,106 @@ function App() {
       <div className="min-vh-100 bg-light d-flex flex-column">
         <Routes>
           {/* Public Routes */}
-          <Route path="/" element={<Layout><Home /></Layout>} />
-          <Route path="/login" element={<Layout showFooter={false}><Login /></Layout>} />
-          <Route path="/register" element={<Layout showFooter={false}><Register /></Layout>} />
-          <Route path="/courses" element={<Layout><CourseList /></Layout>} />
-          <Route path="/course/:id" element={<Layout><CourseDetail /></Layout>} />
-          
+          <Route
+            path="/"
+            element={
+              <Layout>
+                <Home />
+              </Layout>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Layout showFooter={false}>
+                <Login />
+              </Layout>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <Layout showFooter={false}>
+                <Register />
+              </Layout>
+            }
+          />
+          <Route
+            path="/courses"
+            element={
+              <Layout>
+                <CourseList />
+              </Layout>
+            }
+          />
+          <Route
+            path="/course/:id"
+            element={
+              <Layout>
+                <CourseDetail />
+              </Layout>
+            }
+          />
+          <Route
+            path="/search"
+            element={
+              <Layout>
+                <SearchResults />
+              </Layout>
+            }
+          />
+          <Route
+            path="/teacher/:id"
+            element={
+              <Layout>
+                <TeacherProfile />
+              </Layout>
+            }
+          />
+
           {/* Protected Routes */}
-          <Route 
-            path="/dashboard" 
+          <Route
+            path="/dashboard"
             element={
               <ProtectedRoute>
-                <Layout><DashboardRouter /></Layout>
+                <Layout>
+                  <DashboardRouter />
+                </Layout>
               </ProtectedRoute>
-            } 
+            }
           />
-          
-          <Route 
-            path="/instructor" 
+
+          <Route
+            path="/instructor"
             element={
-              <ProtectedRoute roles={['instructor']}>
-                <Layout><InstructorDashboard /></Layout>
+              <ProtectedRoute roles={["instructor"]}>
+                <Layout>
+                  <InstructorDashboard />
+                </Layout>
               </ProtectedRoute>
-            } 
+            }
           />
-          
-          <Route 
-            path="/learn/:courseId" 
+
+          <Route
+            path="/teacher/content"
+            element={
+              <ProtectedRoute roles={["instructor"]}>
+                <Layout>
+                  <TeacherContent />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/learn/:courseId"
             element={
               <ProtectedRoute>
                 <CourseLearning />
               </ProtectedRoute>
-            } 
+            }
           />
-          
+
           {/* Redirect unknown routes */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
