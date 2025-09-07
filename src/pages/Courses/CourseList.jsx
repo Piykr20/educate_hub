@@ -1,79 +1,102 @@
-import React, { useState, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
-import { CourseCard } from '../../components/CourseCard';
-import { useCourses, useAppDispatch } from '../../hooks/useRedux';
-import { setFilters, clearFilters } from '../../store/slices/coursesSlice';
+import React, { useState, useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
+import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
+import { CourseCard } from "../../components/CourseCard";
+import { useCourses, useAppDispatch } from "../../hooks/useRedux";
+import { setFilters, clearFilters } from "../../store/slices/coursesSlice";
 
 export const CourseList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { courses, categories, filters } = useCourses();
   const dispatch = useAppDispatch();
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
-  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '');
-  const [priceFilter, setPriceFilter] = useState('');
-  const [levelFilter, setLevelFilter] = useState('');
-  const [ratingFilter, setRatingFilter] = useState('');
-  const [sortBy, setSortBy] = useState('popularity');
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
+  const [selectedCategory, setSelectedCategory] = useState(
+    searchParams.get("category") || ""
+  );
+  const [priceFilter, setPriceFilter] = useState("");
+  const [levelFilter, setLevelFilter] = useState("");
+  const [ratingFilter, setRatingFilter] = useState("");
+  const [sortBy, setSortBy] = useState("popularity");
 
   const filteredAndSortedCourses = useMemo(() => {
-    let filtered = courses.filter(course => {
-      const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           course.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           course.instructor.name.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory = !selectedCategory || course.category === selectedCategory;
-      
-      let matchesPrice = true;
-      if (priceFilter === 'free') matchesPrice = course.price === 0;
-      else if (priceFilter === 'paid') matchesPrice = course.price > 0;
-      else if (priceFilter === 'under50') matchesPrice = course.price < 50;
-      else if (priceFilter === 'under100') matchesPrice = course.price < 100;
-      
-      const matchesLevel = !levelFilter || course.level === levelFilter;
-      const matchesRating = !ratingFilter || course.rating >= parseFloat(ratingFilter);
+    let filtered = courses.filter((course) => {
+      const matchesSearch =
+        course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        course.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        course.instructor.name
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase());
+      const matchesCategory =
+        !selectedCategory || course.category === selectedCategory;
 
-      return matchesSearch && matchesCategory && matchesPrice && matchesLevel && matchesRating;
+      let matchesPrice = true;
+      if (priceFilter === "free") matchesPrice = course.price === 0;
+      else if (priceFilter === "paid") matchesPrice = course.price > 0;
+      else if (priceFilter === "under50") matchesPrice = course.price < 50;
+      else if (priceFilter === "under100") matchesPrice = course.price < 100;
+
+      const matchesLevel = !levelFilter || course.level === levelFilter;
+      const matchesRating =
+        !ratingFilter || course.rating >= parseFloat(ratingFilter);
+
+      return (
+        matchesSearch &&
+        matchesCategory &&
+        matchesPrice &&
+        matchesLevel &&
+        matchesRating
+      );
     });
 
     // Sort courses
     filtered.sort((a, b) => {
       switch (sortBy) {
-        case 'price-low':
+        case "price-low":
           return a.price - b.price;
-        case 'price-high':
+        case "price-high":
           return b.price - a.price;
-        case 'rating':
+        case "rating":
           return b.rating - a.rating;
-        case 'newest':
-          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-        case 'popularity':
+        case "newest":
+          return (
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
+        case "popularity":
         default:
           return b.studentsCount - a.studentsCount;
       }
     });
 
     return filtered;
-  }, [courses, searchQuery, selectedCategory, priceFilter, levelFilter, ratingFilter, sortBy]);
+  }, [
+    courses,
+    searchQuery,
+    selectedCategory,
+    priceFilter,
+    levelFilter,
+    ratingFilter,
+    sortBy,
+  ]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     const params = new URLSearchParams(searchParams);
     if (searchQuery) {
-      params.set('q', searchQuery);
+      params.set("q", searchQuery);
     } else {
-      params.delete('q');
+      params.delete("q");
     }
     setSearchParams(params);
   };
 
   const clearFilters = () => {
     dispatch(clearFilters());
-    setSearchQuery('');
-    setSelectedCategory('');
-    setPriceFilter('');
-    setLevelFilter('');
-    setRatingFilter('');
-    setSortBy('popularity');
+    setSearchQuery("");
+    setSelectedCategory("");
+    setPriceFilter("");
+    setLevelFilter("");
+    setRatingFilter("");
+    setSortBy("popularity");
     setSearchParams(new URLSearchParams());
   };
 
@@ -82,7 +105,9 @@ export const CourseList = () => {
       {/* Header */}
       <div className="mb-4">
         <h1 className="h2 fw-bold">All Courses</h1>
-        <p className="text-muted">Discover thousands of courses from expert instructors</p>
+        <p className="text-muted">
+          Discover thousands of courses from expert instructors
+        </p>
       </div>
 
       {/* Search and Filters */}
@@ -105,25 +130,29 @@ export const CourseList = () => {
           <Row>
             {/* Category Filter */}
             <Col md={6} lg={2} className="mb-3">
-              <Form.Label className="small fw-medium text-muted">Category</Form.Label>
+              <Form.Label className="small fw-medium text-muted">
+                Category
+              </Form.Label>
               <Form.Select
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-              >
+                onChange={(e) => setSelectedCategory(e.target.value)}>
                 <option value="">All Categories</option>
-                {categories.map(category => (
-                  <option key={category.id} value={category.name}>{category.name}</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.name}>
+                    {category.name}
+                  </option>
                 ))}
               </Form.Select>
             </Col>
 
             {/* Price Filter */}
             <Col md={6} lg={2} className="mb-3">
-              <Form.Label className="small fw-medium text-muted">Price</Form.Label>
+              <Form.Label className="small fw-medium text-muted">
+                Price
+              </Form.Label>
               <Form.Select
                 value={priceFilter}
-                onChange={(e) => setPriceFilter(e.target.value)}
-              >
+                onChange={(e) => setPriceFilter(e.target.value)}>
                 <option value="">Any Price</option>
                 <option value="free">Free</option>
                 <option value="paid">Paid</option>
@@ -134,11 +163,12 @@ export const CourseList = () => {
 
             {/* Level Filter */}
             <Col md={6} lg={2} className="mb-3">
-              <Form.Label className="small fw-medium text-muted">Level</Form.Label>
+              <Form.Label className="small fw-medium text-muted">
+                Level
+              </Form.Label>
               <Form.Select
                 value={levelFilter}
-                onChange={(e) => setLevelFilter(e.target.value)}
-              >
+                onChange={(e) => setLevelFilter(e.target.value)}>
                 <option value="">Any Level</option>
                 <option value="Beginner">Beginner</option>
                 <option value="Intermediate">Intermediate</option>
@@ -148,11 +178,12 @@ export const CourseList = () => {
 
             {/* Rating Filter */}
             <Col md={6} lg={2} className="mb-3">
-              <Form.Label className="small fw-medium text-muted">Rating</Form.Label>
+              <Form.Label className="small fw-medium text-muted">
+                Rating
+              </Form.Label>
               <Form.Select
                 value={ratingFilter}
-                onChange={(e) => setRatingFilter(e.target.value)}
-              >
+                onChange={(e) => setRatingFilter(e.target.value)}>
                 <option value="">Any Rating</option>
                 <option value="4.5">4.5 & up</option>
                 <option value="4.0">4.0 & up</option>
@@ -162,11 +193,12 @@ export const CourseList = () => {
 
             {/* Sort By */}
             <Col md={6} lg={2} className="mb-3">
-              <Form.Label className="small fw-medium text-muted">Sort By</Form.Label>
+              <Form.Label className="small fw-medium text-muted">
+                Sort By
+              </Form.Label>
               <Form.Select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-              >
+                onChange={(e) => setSortBy(e.target.value)}>
                 <option value="popularity">Most Popular</option>
                 <option value="rating">Highest Rated</option>
                 <option value="newest">Newest</option>
@@ -180,8 +212,7 @@ export const CourseList = () => {
               <Button
                 onClick={clearFilters}
                 variant="outline-secondary"
-                className="w-100"
-              >
+                className="w-100">
                 <i className="bi bi-funnel me-2"></i>
                 Clear
               </Button>
@@ -194,9 +225,13 @@ export const CourseList = () => {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>
           <p className="text-muted mb-0">
-            Showing {filteredAndSortedCourses.length} of {courses.length} courses
+            Showing {filteredAndSortedCourses.length} of {courses.length}{" "}
+            courses
             {searchQuery && (
-              <span> for "<strong>{searchQuery}</strong>"</span>
+              <span>
+                {" "}
+                for "<strong>{searchQuery}</strong>"
+              </span>
             )}
           </p>
         </div>
@@ -214,13 +249,13 @@ export const CourseList = () => {
       {/* No Results */}
       {filteredAndSortedCourses.length === 0 && (
         <div className="text-center py-5">
-          <p className="text-muted h5">No courses found matching your criteria.</p>
+          <p className="text-muted h5">
+            No courses found matching your criteria.
+          </p>
           <Button
             onClick={clearFilters}
             variant="primary"
-            className="mt-3"
-            className="mt-3 btn-gradient"
-          >
+            className="mt-3 btn-gradient">
             Clear all filters
           </Button>
         </div>
